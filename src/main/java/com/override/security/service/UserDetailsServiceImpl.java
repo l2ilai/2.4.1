@@ -35,17 +35,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Transactional
-    public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByName(user.getName());
-
-        if (userFromDB != null) {
-            return false;
-        }
-
+    public void saveUser(User user) {
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return true;
     }
 
     @Transactional
@@ -66,10 +59,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findByName(name);
-        if (user == null) {
+        Optional<User> user = userRepository.findByName(name);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");
         }
-        return user;
+        return user.get();
     }
 }
