@@ -2,15 +2,42 @@ package com.override.security.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-// Этот класс реализует интерфейс GrantedAuthority, в котором необходимо переопределить только один метод getAuthority() (возвращает имя роли).
-// Имя роли должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER.
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "t_role")
 public class Role implements GrantedAuthority {
+
+    @Id
+    @Column
     private Long id;
+
+    @Column
     private String role;
+
+    @Transient
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     public Role(Long id, String role) {
         this.id = id;
         this.role = role;
+    }
+
+    public Role(Long id) {
+        this.id = id;
+    }
+
+    public Role() {
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Long getId() {
@@ -32,5 +59,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return role;
+    }
+
+    @Override
+    public String toString() {
+        return  role;
     }
 }

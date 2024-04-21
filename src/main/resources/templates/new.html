@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>New User</title>
@@ -12,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             <div class="col-md-10">
-                <form action="#" th:action="@{/createUser}" th:object="${user}" method="post">
+                <form action="#" th:action="@{/admin/createUser}" th:object="${user}" method="post">
                     <div class="row">
                         <div class="form-group col-md-8">
                             <label for="name" class="col-form-label">Name</label>
@@ -20,16 +21,10 @@
                                    id="name" placeholder="Name" />
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="age" class="col-form-label">Age</label>
-                            <input type="text" th:field="*{age}" class="form-control"
-                                   id="age" placeholder="Age" />
+                            <label for="password" class="col-form-label">Password</label>
+                            <input type="password" th:field="*{password}" class="form-control"
+                                   id="password" placeholder="Password" />
                         </div>
-                        <div class="form-group col-md-8">
-                            <label for="email" class="col-form-label">Email</label>
-                            <input type="text" th:field="*{email}" class="form-control"
-                                   id="email" placeholder="Email" />
-                        </div>
-
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-primary" value=" Submit ">
                         </div>

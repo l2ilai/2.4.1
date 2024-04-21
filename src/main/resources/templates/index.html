@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div sec:authorize="!isAuthenticated()">
+    <h4><a href="/login">Войти</a></h4>
+</div>
 
+<div sec:authorize="isAuthenticated()">
+    <h4><a href="/logout">Выйти</a></h4>
+</div>
 </body>
 </html>
