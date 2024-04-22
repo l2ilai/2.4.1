@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "t_user")
 public class User implements UserDetails {
@@ -20,17 +19,17 @@ public class User implements UserDetails {
 
     @Column
     @NotEmpty(message = "Имя не должно быть пустым!")
-    @Size(min = 3, max = 12 , message = "Имя должно быть от 3 до 12 символов!")
+    @Size(min = 2, max = 100 , message = "Имя должно быть от 3 до 12 символов!")
     private String name;
 
     @Column
     @NotEmpty(message = "Пароль не должнен быть пустым!")
-    @Size(min = 4, max = 100 , message = "Пароль должно быть от 4 до 50 символов!")
+    @Size(min = 2, max = 100 , message = "Пароль должно быть от 4 до 50 символов!")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @NotEmpty(message = "Должна быть выбрана хотябы одна роль!")
     private Set<Role> roles;
-
 
     public User() {
     }

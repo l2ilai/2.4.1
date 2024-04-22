@@ -3,6 +3,7 @@ package com.override.security.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
@@ -63,6 +64,24 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return  role;
+        return  this.role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role1 = (Role) o;
+
+        if (!id.equals(role1.id)) return false;
+        return role.equals(role1.role);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
     }
 }

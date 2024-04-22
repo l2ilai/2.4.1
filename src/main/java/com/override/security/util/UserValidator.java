@@ -1,4 +1,4 @@
-package com.override.security.Util;
+package com.override.security.util;
 
 import com.override.security.model.User;
 import com.override.security.service.UserDetailsServiceImpl;

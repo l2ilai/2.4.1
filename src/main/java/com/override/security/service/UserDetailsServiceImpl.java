@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public User findUser(Long id) {
         Optional<User> userFromDb = userRepository.findById(id);
-        return userFromDb.orElse(new User());
+        return userFromDb.orElseThrow();
     }
 
     @Transactional
@@ -42,12 +42,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Transactional
-    public User updateUser(Optional<Long> id) {
-        if (id.isPresent()) {
-            return findUser(id.get());
-        } else {
-            return new User();
-        }
+    public void updateUser(Long id, User updateUser) {
+        User userToBeUpdated = findUser(id);
+        userToBeUpdated.setName(updateUser.getName());
+        userToBeUpdated.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        userToBeUpdated.setRoles(updateUser.getRoles());
     }
 
     @Transactional
