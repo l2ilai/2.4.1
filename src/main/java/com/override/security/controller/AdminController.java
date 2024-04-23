@@ -43,7 +43,7 @@ public class AdminController {
     @PostMapping("/createUser")
     public String createUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult, Model model) {
-        userValidator.validate(user, bindingResult);
+        userValidator.validateNewUser(user, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("allRoles", roleService.findAllRoles());
             return "new";
@@ -62,6 +62,7 @@ public class AdminController {
     @PostMapping(path = {"/{id}"})
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              Authentication authentication, Model model) {
+        userValidator.validateEditUser(user, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("allRoles", roleService.findAllRoles());
             return "edit";
