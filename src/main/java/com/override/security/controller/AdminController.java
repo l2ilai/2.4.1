@@ -1,5 +1,6 @@
 package com.override.security.controller;
 
+import com.override.security.model.Role;
 import com.override.security.util.UserValidator;
 import com.override.security.model.User;
 import com.override.security.service.RoleService;
@@ -32,7 +33,8 @@ public class AdminController {
     }
 
     @GetMapping(path = {"/new"})
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("allRoles",roleService.findAllRoles());
         return "new";
     }
 

@@ -30,12 +30,13 @@
                         </div>
 
                         <div class="form-group col-md-8">
-                            <label>Roles:
-                                <input type="checkbox" name="roles"
+                            <label for="roles" class="col-form-label">Roles:
+                                <input type="checkbox"
                                        th:each="role : ${allRoles}"
                                        th:text="${role.role}"
                                        th:value="${role.id}"
                                        th:field="*{roles}"
+                                       class="form-control" id="roles" placeholder="Roles"
                                 />
                             </label>
                             <div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>

@@ -19,16 +19,16 @@ public class User implements UserDetails {
 
     @Column
     @NotEmpty(message = "Имя не должно быть пустым!")
-    @Size(min = 2, max = 100 , message = "Имя должно быть от 3 до 12 символов!")
+    @Size(min = 3, max = 20 , message = "Имя должно быть от 3 до 20 символов!")
     private String name;
 
     @Column
     @NotEmpty(message = "Пароль не должнен быть пустым!")
-    @Size(min = 2, max = 100 , message = "Пароль должно быть от 4 до 50 символов!")
+    @Size(min = 3, max = 61 , message = "Пароль должно быть от 3 до 61 символов!")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @NotEmpty(message = "Должна быть выбрана хотябы одна роль!")
+    @NotEmpty(message = "Должна быть хотя бы одна роль!")
     private Set<Role> roles;
 
     public User() {
