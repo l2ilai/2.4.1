@@ -10,7 +10,7 @@
 <div sec:authorize="isAuthenticated()">
     Authenticated as: <div><span sec:authentication="name"></span></div>
     Password: <div>  <span sec:authentication="principal.password"></span> </div>
-    Roles: <div><span sec:authentication="principal.roles"></span></div>
+    Roles: <div><span th:text="${roles}"></span></div>
 </div>
 
 <h4><a href="/logout">Выйти</a></h4>

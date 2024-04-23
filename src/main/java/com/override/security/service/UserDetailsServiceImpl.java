@@ -71,10 +71,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Role roleAdmin = new Role(2L, "ROLE_ADMIN");
         User authenticatedUser = (User) authentication.getPrincipal();
         if (user.getName().equals(authenticatedUser.getName())) {
-            Set<Role> userRoles = authenticatedUser.getRoles();
-            return userRoles.contains(roleAdmin);
+            Set<Role> userRoles = user.getRoles();
+            return !userRoles.contains(roleAdmin);
         }
         return false;
 
+    }
+
+    public Set<Role> getRoles(Authentication authentication) {
+        User authenticatedUser =  (User) authentication.getPrincipal();
+        User user = findUser(authenticatedUser.getId());
+        return user.getRoles();
     }
 }

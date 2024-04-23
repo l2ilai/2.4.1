@@ -1,12 +1,19 @@
 package com.override.security.controller;
 
+import com.override.security.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("")
 public class UserController {
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @GetMapping(value = "/")
     public String getHomePage() {
@@ -19,7 +26,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public String getUserPage() {
+    public String getUserPage(Model model, Authentication authentication) {
+        model.addAttribute("roles",userDetailsService.getRoles(authentication));
         return "user";
     }
 }
