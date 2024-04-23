@@ -69,9 +69,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public boolean isNotRoleAdmin(Authentication authentication, User user) {
         Role roleAdmin = new Role(2L, "ROLE_ADMIN");
-        User userDetails = (User) authentication.getPrincipal();
-        if (user.getName().equals(userDetails.getName())) {
-            Set<Role> userRoles = userDetails.getRoles();
+        User authenticatedUser = (User) authentication.getPrincipal();
+        if (user.getName().equals(authenticatedUser.getName())) {
+            Set<Role> userRoles = authenticatedUser.getRoles();
             return userRoles.contains(roleAdmin);
         }
         return false;
