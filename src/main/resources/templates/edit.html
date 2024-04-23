@@ -3,13 +3,13 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>New User</title>
+    <title>Edit User</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 </head>
 
 <body>
 <div class="container my-5">
-    <h3> Add User</h3>
+    <h3> Edit User</h3>
     <div class="card">
         <div class="card-body">
             <div class="col-md-10">
@@ -30,15 +30,15 @@
                         </div>
 
                         <div class="form-group col-md-8">
-                            <label for="roles" class="col-form-label">Roles:
-                                <input type="checkbox"
-                                       th:each="role : ${allRoles}"
-                                       th:text="${role.role}"
+                            <label for="roles" class="col-form-label">Roles: </label>
+                            <th:block th:each="role : ${allRoles}">
+                                <input type="checkbox" th:field="*{roles}"
                                        th:value="${role.id}"
-                                       th:field="*{roles}"
-                                       class="form-control" id="roles" placeholder="Roles"
+                                       th:text="${role.role}"
+                                       id="roles" placeholder="Roles"
                                 />
-                            </label>
+                            </th:block>
+
                             <div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>
                         </div>
 

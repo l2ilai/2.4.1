@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,9 +40,11 @@ public class AdminController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("user") @Valid User user,
+                             BindingResult bindingResult, Model model) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("allRoles", roleService.findAllRoles());
             return "new";
         }
         userDetailsService.saveUser(user);
@@ -57,11 +60,15 @@ public class AdminController {
 
     @PostMapping(path = {"/{id}"})
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                             @PathVariable("id") Long id) {
+                             @PathVariable("id") Long id, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("allRoles", roleService.findAllRoles());
             return "edit";
         }
         userDetailsService.updateUser(id, user);
+        if (!user.getRoles().contains(new Role(2L, "ROLE_ADMIN"))) {
+            return "redirect:/logout";
+        }
         return "redirect:/admin";
     }
 

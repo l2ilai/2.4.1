@@ -35,7 +35,7 @@
                                        th:text="${role.role}"
                                        th:value="${role.id}"
                                        th:field="*{roles}"
-                                       class="form-control" id="roles" placeholder="Roles"
+                                       id="roles" placeholder="Roles"
                                 />
                             </label>
                             <div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>
