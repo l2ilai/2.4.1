@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping(value = "/user")
     public String getUserPage(Model model, Authentication authentication) {
-        model.addAttribute("roles",userDetailsService.getRoles(authentication));
+        model.addAttribute("user",userDetailsService.getAuthenticatedUser(authentication));
         return "user";
     }
 }

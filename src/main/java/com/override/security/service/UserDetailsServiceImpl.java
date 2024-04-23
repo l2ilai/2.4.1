@@ -78,9 +78,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     }
 
-    public Set<Role> getRoles(Authentication authentication) {
+    public User getAuthenticatedUser(Authentication authentication) {
         User authenticatedUser =  (User) authentication.getPrincipal();
-        User user = findUser(authenticatedUser.getId());
-        return user.getRoles();
+        return findUser(authenticatedUser.getId());
     }
 }
