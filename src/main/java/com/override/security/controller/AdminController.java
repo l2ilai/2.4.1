@@ -6,6 +6,7 @@ import com.override.security.model.User;
 import com.override.security.service.RoleService;
 import com.override.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,21 +61,20 @@ public class AdminController {
 
     @PostMapping(path = {"/{id}"})
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                              Model model) {
+                             Authentication authentication, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("allRoles", roleService.findAllRoles());
             return "edit";
         }
         userDetailsService.updateUser(user);
-        if (userDetailsService.isNotRoleAdmin(user)) {
+        if (userDetailsService.isNotRoleAdmin(authentication, user)) {
             return "redirect:/logout";
         }
         return "redirect:/admin";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@ModelAttribute("user") User user,
-                             @PathVariable("id") Long id) {
+    public String deleteUser(@PathVariable("id") Long id) {
         userDetailsService.deleteUser(id);
         return "redirect:/admin";
     }

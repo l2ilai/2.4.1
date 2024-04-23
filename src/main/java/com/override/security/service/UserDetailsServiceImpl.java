@@ -5,6 +5,8 @@ import com.override.security.model.Role;
 import com.override.security.model.User;
 import com.override.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,15 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -65,7 +67,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user.get();
     }
 
-    public boolean isNotRoleAdmin(User user) {
-        return !user.getRoles().contains(new Role(2L, "ROLE_ADMIN"));
+    public boolean isNotRoleAdmin(Authentication authentication, User user) {
+        User userFromDB = (User) loadUserByUsername(user.getName());
+        Role roleAdmin = new Role(2L, "ROLE_ADMIN");
+        User userDetails = (User) authentication.getPrincipal();
+        String name = userFromDB.getName();
+        Set<Role> setRolesWeb = userDetails.getRoles();
+        Set<Role> setRolesDB = userFromDB.getRoles();
+
+        return !(setRolesWeb.contains("ROLE_ADMIN") && setRolesDB.contains("ROLE_ADMIN"));
     }
 }
