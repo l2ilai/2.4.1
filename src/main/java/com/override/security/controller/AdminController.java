@@ -60,13 +60,13 @@ public class AdminController {
 
     @PostMapping(path = {"/{id}"})
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                             @PathVariable("id") Long id, Model model) {
+                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("allRoles", roleService.findAllRoles());
             return "edit";
         }
-        userDetailsService.updateUser(id, user);
-        if (!user.getRoles().contains(new Role(2L, "ROLE_ADMIN"))) {
+        userDetailsService.updateUser(user);
+        if (userDetailsService.isNotRoleAdmin(user)) {
             return "redirect:/logout";
         }
         return "redirect:/admin";

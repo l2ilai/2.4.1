@@ -18,4 +18,8 @@ public class RoleService {
     public List<Role> findAllRoles() {
         return roleRepository.findAll();
     }
+
+    public Role getRoleAdmin() {
+        return new Role(2L, "ROLE_ADMIN");
+    }
 }

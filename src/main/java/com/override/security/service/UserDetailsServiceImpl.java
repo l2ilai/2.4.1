@@ -42,8 +42,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Transactional
-    public void updateUser(Long id, User updateUser) {
-        User userToBeUpdated = findUser(id);
+    public void updateUser(User updateUser) {
+        User userToBeUpdated = findUser(updateUser.getId());
         userToBeUpdated.setName(updateUser.getName());
         userToBeUpdated.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         userToBeUpdated.setRoles(updateUser.getRoles());
@@ -63,5 +63,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found!");
         }
         return user.get();
+    }
+
+    public boolean isNotRoleAdmin(User user) {
+        return !user.getRoles().contains(new Role(2L, "ROLE_ADMIN"));
     }
 }
