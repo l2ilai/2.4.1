@@ -1,17 +1,19 @@
-version: '1'
 services:
   postgres:
-    image: 'postgres:16'
+    image: postgres:16
     container_name: 'java-postgres'
     environment:
-      - 'POSTGRES_USER=postgres'
-      - 'POSTGRES_DB=postgres'
-      - 'POSTGRES_PASSWORD=pass'
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: postgres
   app:
     build: ./
     container_name: 'java-app'
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
     ports:
       - 999:999
-    links:
-      - 'postgres:localhost'
+
 
