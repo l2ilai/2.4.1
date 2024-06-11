@@ -28,8 +28,6 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
 
-    Logger logger = LoggerFactory.getLogger(AdminController.class);
-
     @GetMapping
     public String getAdminPage(Model model) {
         model.addAttribute("users", userDetailsService.findAllUsers());
