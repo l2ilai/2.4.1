@@ -3,14 +3,14 @@ services:
     image: postgres:16
     container_name: 'java-postgres'
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-postgres}
       POSTGRES_DB: postgres
   app:
     build: ./
     container_name: 'java-app'
-    env_file:
-      - ./.env
+#    env_file:
+#      - ./.env
     depends_on:
       - postgres
     ports:

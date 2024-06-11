@@ -4,6 +4,8 @@ import com.override.security.model.User;
 import com.override.security.service.RoleService;
 import com.override.security.service.UserDetailsServiceImpl;
 import com.override.security.util.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class AdminController {
 
     @Autowired
     private RoleService roleService;
+
+    Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @GetMapping
     public String getAdminPage(Model model) {

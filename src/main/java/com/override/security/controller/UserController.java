@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping(value = "/")
     public String getHomePage() {
-        return "index";
+        return "redirect:/login";
     }
 
     @GetMapping(value = "/login")
