@@ -41,3 +41,25 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: l2ilai/spring-app
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [ build_and_push_images, push_compose ]
+    steps:
+      - name: Connect with SSH and Deploy
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          script: |
+            echo DB_USER = ${{ secrets.DB_USER }} >> review-bot-env.txt
+            echo DB_PASS = ${{ secrets.DB_PASS }} >> review-bot-env.txt
+            
+            sudo -S docker stop java-app
+            sudo -S docker rm java-app
+            sudo -S docker rmi l2ilai/spring-app
+            sudo -S docker-compose -f docker-compose.yml --env-file=review-bot-env.txt up -d
+            
+            rm review-bot-env.txt

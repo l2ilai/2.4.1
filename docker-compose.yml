@@ -1,16 +1,17 @@
 services:
   postgres:
     image: postgres:16
-    container_name: 'java-postgres'
+    container_name: 'java-postgres'\
+    restart: always
     environment:
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASS:-postgres}
       POSTGRES_DB: postgres
   app:
-    image: 'l2ilai/spring-app:0.2'
+    image: 'l2ilai/spring-app:latest'
     container_name: 'java-app'
-    env_file:
-      - ./.env
+#    env_file:
+#      - ./.env
     depends_on:
       - postgres
     ports:
