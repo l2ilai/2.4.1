@@ -1,11 +1,10 @@
 server:
     port: 999
-DB_USER: postgres
-DB_PASS: pass
+
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/postgres
+        url: jdbc:postgresql://postgres:5432/postgres
         username: ${DB_USER:postgres}
         password: ${DB_PASS:postgres}
     jpa:

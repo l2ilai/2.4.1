@@ -28,6 +28,8 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
 
+    Logger logger = LoggerFactory.getLogger(AdminController.class);
+
     @GetMapping
     public String getAdminPage(Model model) {
         model.addAttribute("users", userDetailsService.findAllUsers());
@@ -49,6 +51,7 @@ public class AdminController {
             return "new";
         }
         userDetailsService.saveUser(user);
+        logger.info("Пользователь " + user + " создан!");
         return "redirect:/admin";
     }
 
@@ -77,6 +80,7 @@ public class AdminController {
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userDetailsService.deleteUser(id);
+        logger.info("Пользователь " + userDetailsService.findUser(id) + " удален!");
         return "redirect:/admin";
     }
 }

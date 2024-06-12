@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    Logger logger = LoggerFactory.getLogger(AdminController.class);
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping(value = "/")
     public String getHomePage() {
