@@ -48,18 +48,25 @@ jobs:
     needs: [ build_and_push_images, push_compose ]
     steps:
       - name: Connect with SSH and Deploy
-        uses: appleboy/ssh-action@v0.1.8
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{secrets.SSH_PRIVATE_KEY}}
+          port: 22
           script: |
-            echo DB_USER = ${{ secrets.DB_USER }} >> review-bot-env.txt
-            echo DB_PASS = ${{ secrets.DB_PASS }} >> review-bot-env.txt
+            whoami
+            ls
             
-            sudo -S docker stop java-app
-            sudo -S docker rm java-app
-            sudo -S docker rmi l2ilai/spring-app
-            sudo -S docker-compose -f docker-compose.yml --env-file=review-bot-env.txt up -d
+            sudo cd -e /home/${{ secrets.SSH_USER }}
             
-            rm review-bot-env.txt
+            echo DB_USER = ${{ secrets.DB_USER }} >> java-app-env.txt
+            echo DB_PASS = ${{ secrets.DB_PASS }} >> java-app-env.txt
+            
+            sudo docker stop java-app
+            sudo docker rm java-app
+            sudo docker rmi l2ilai/spring-app
+            
+            sudo docker-compose -f docker-compose.yml --env-file=java-app-env.txt up -d
+            
+            rm java-app-env.txt
