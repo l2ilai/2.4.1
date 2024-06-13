@@ -46,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public void updateUser(User updateUser) {
         User userToBeUpdated = findUser(updateUser.getId());
-        userToBeUpdated.setName(updateUser.getName());
+        userToBeUpdated.setNick(updateUser.getNick());
         userToBeUpdated.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         userToBeUpdated.setRoles(updateUser.getRoles());
     }
@@ -60,7 +60,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByName(name);
+        Optional<User> user = userRepository.findByNick(name);
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");
         }
@@ -70,7 +70,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public boolean isNotRoleAdmin(Authentication authentication, User user) {
         Role roleAdmin = new Role(2L, "ROLE_ADMIN");
         User authenticatedUser = (User) authentication.getPrincipal();
-        if (user.getName().equals(authenticatedUser.getName())) {
+        if (user.getNick().equals(authenticatedUser.getNick())) {
             Set<Role> userRoles = user.getRoles();
             return !userRoles.contains(roleAdmin);
         }

@@ -32,7 +32,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="user, iStat : ${users}" th:style="${iStat.odd}? 'font-weight: normal;'">
-                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.nick}"></td>
                                 <td th:text="${user.getRoles()}"></td>
                                 <td><a th:href="@{/admin/edit/{id}(id=${user.id})}" class="btn btn-primary">
                                     <i class="fas fa-user-edit ml-2"></i>Edit

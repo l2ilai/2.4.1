@@ -3,7 +3,6 @@ package com.override.security.util;
 import com.override.security.model.User;
 import com.override.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -40,8 +39,8 @@ public class UserValidator implements Validator {
 
 
     public void validateEditUser(User user, Errors errors) {
-        String userFromDB = userDetailsService.findUser(user.getId()).getName();
-        if (userFromDB.equals(user.getName())) {
+        String userFromDB = userDetailsService.findUser(user.getId()).getNick();
+        if (userFromDB.equals(user.getNick())) {
             return;
         }
         try {

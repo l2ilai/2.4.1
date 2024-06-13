@@ -20,7 +20,7 @@ public class User implements UserDetails {
     @Column
     @NotEmpty(message = "Имя не должно быть пустым!")
     @Size(min = 3, max = 20 , message = "Имя должно быть от 3 до 20 символов!")
-    private String name;
+    private String nick;
 
     @Column
     @NotEmpty(message = "Пароль не должнен быть пустым!")
@@ -34,9 +34,9 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String name, String password, Set<Role> roles) {
+    public User(Long id, String nick, String password, Set<Role> roles) {
         this.id = id;
-        this.name = name;
+        this.nick = nick;
         this.password = password;
         this.roles = roles;
     }
@@ -49,12 +49,12 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNick() {
+        return nick;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNick(String name) {
+        this.nick = name;
     }
 
 
@@ -70,7 +70,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return nick;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "name='" + nick + '\'' +
                 '}';
     }
 }

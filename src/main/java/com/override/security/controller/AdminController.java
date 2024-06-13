@@ -79,8 +79,9 @@ public class AdminController {
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
+        User remoteUser = userDetailsService.findUser(id);
         userDetailsService.deleteUser(id);
-        logger.info("Пользователь " + userDetailsService.findUser(id) + " удален!");
+        logger.info("Пользователь " + remoteUser + " удален!");
         return "redirect:/admin";
     }
 }
