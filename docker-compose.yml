@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS:-postgres}
       POSTGRES_DB: postgres
   app:
-    image: "l2ilai/spring-app:latest"
+    image: "l2ilai/spring-app:3.0"
     container_name: 'java-app'
     env_file:
       - ./.env
